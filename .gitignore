@@ -1,7 +1,7 @@
 # Ignore virtual environment folders
 env/
 venv/
-.ML_hand_gesture/
+ML_hand_gesture/
 __pycache__/
 *.py[cod]
 *.so
