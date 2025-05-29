@@ -17,7 +17,7 @@ def log_model_with_mlflow(model, X_val, y_val, model_name, exp_id, output_dir):
         mlflow.set_tag("model", model_name)
 
         pred = model.predict(X_val)
-        accuracy,pres,recall,f1_sc= evaluation(y_val, pred)
+        accuracy,pres,recall,f1_sc= evaluation(y_val, pred,output_dir)
          
 
         mlflow.log_params(model.best_params_)
