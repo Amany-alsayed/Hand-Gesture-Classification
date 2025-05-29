@@ -2,25 +2,40 @@
 env/
 venv/
 ML_hand_gesture/
+
+# Python cache and compiled files
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
 *.so
 
-# Ignore Jupyter Notebook checkpoints
+# Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
-# Ignore VSCode settings
+# VSCode settings
 .vscode/
 
-# Ignore system files
+# System files
 .DS_Store
 Thumbs.db
 
-# Ignore logs and temporary files
+# Logs and temporary files
 *.log
 *.tmp
 
-# Ignore Python cache
-*.pyo
-*.pyd
- 
+# Ignore MLflow experiment logs
+mlruns/
+
+# Ignore large data/model files (adjust extensions as needed)
+*.h5
+*.pkl
+*.joblib
+*.pt
+*.onnx
+
+# Ignore notebook outputs (if needed)
+*.nbconvert.ipynb
+
+# Ignore test artifacts
+test_output/
