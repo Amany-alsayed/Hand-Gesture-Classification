@@ -26,7 +26,7 @@ Thumbs.db
 
 # Ignore MLflow experiment logs
 mlruns/
-
+mlartifacts/
 # Ignore large data/model files (adjust extensions as needed)
 *.h5
 *.pkl

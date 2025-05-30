@@ -24,13 +24,14 @@ def main():
     rf_model=joblib.load('pkl_files\RandomForestClassifier.pkl')
     log_model_with_mlflow(rf_model, X_val, y_val, "RandomForestClassifier", experiment_id, output_dir)
     
-    gb_model = train_gredient_Boost(X_train, y_train,"GredientBoostingClassifier")
+    #gb_model = train_gredient_Boost(X_train, y_train,"GredientBoostingClassifier")
+    gb_model=joblib.load('pkl_files\GredientBoostingClassifier.pkl')
     log_model_with_mlflow(gb_model, X_val, y_val, "GredientBoostingClassifier", experiment_id, output_dir)
     
     #sv_model = train_SVM(X_train, y_train,"SVMClassifier")
     sv_model=joblib.load('pkl_files\SVMClassifier.pkl')
     log_model_with_mlflow(sv_model, X_val, y_val, "SVMClassifier", experiment_id, output_dir)
-
+    
     test_acc=testing(experiment_id,X_test,y_test)
     print(f"final accuacy for testing: {test_acc}")
      
