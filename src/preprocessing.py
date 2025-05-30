@@ -28,31 +28,37 @@ def normalize_landmarks(landmarks):
     return landmarks
 
 def load_and_preprocess_data(file_path):
-    logging.info("Loading dataset...")
-    data = pd.read_csv(file_path)
-    X=data.iloc[:,:63]
-    Y=data.iloc[:,-1]
-    X_train,Xvaltest,y_train,y_valtest=train_test_split(X,Y,test_size=0.4,random_state=42,stratify=Y)
-    X_val,X_test,y_val,y_test=train_test_split(Xvaltest,y_valtest,test_size=0.5,random_state=42,stratify=y_valtest)
-    
-    X_train=recenter_landmarks(X_train)
-    X_val=recenter_landmarks(X_val)
-    X_test=recenter_landmarks(X_test)
+    try:
+        logging.info("Loading dataset...")
+        data = pd.read_csv(file_path)
+        X=data.iloc[:,:63]
+        Y=data.iloc[:,-1]
+        X_train,Xvaltest,y_train,y_valtest=train_test_split(X,Y,test_size=0.4,random_state=42,stratify=Y)
+        X_val,X_test,y_val,y_test=train_test_split(Xvaltest,y_valtest,test_size=0.5,random_state=42,stratify=y_valtest)
+        
+        X_train=recenter_landmarks(X_train)
+        X_val=recenter_landmarks(X_val)
+        X_test=recenter_landmarks(X_test)
 
-    X_train=normalize_landmarks(X_train)
-    X_val=normalize_landmarks(X_val)
-    X_test=normalize_landmarks(X_test)
+        X_train=normalize_landmarks(X_train)
+        X_val=normalize_landmarks(X_val)
+        X_test=normalize_landmarks(X_test)
 
-    encoder=LabelEncoder()
-    y_train=encoder.fit_transform(y_train)
-    y_val=encoder.transform(y_val)
-    y_test=encoder.transform(y_test)
+        encoder=LabelEncoder()
+        y_train=encoder.fit_transform(y_train)
+        y_val=encoder.transform(y_val)
+        y_test=encoder.transform(y_test)
 
-    scaling=RobustScaler()
-    X_train=scaling.fit_transform(X_train)
-    X_val=scaling.transform(X_val)
-    X_test=scaling.transform(X_test)
-     
-    joblib.dump(scaling, "pkl_files/scaling.pkl")
-    
-    return X_train,X_val,X_test,y_train,y_val,y_test
+        scaling=RobustScaler()
+        X_train=scaling.fit_transform(X_train)
+        X_val=scaling.transform(X_val)
+        X_test=scaling.transform(X_test)
+        
+        joblib.dump(scaling, "pkl_files/scaling.pkl")
+        return X_train,X_val,X_test,y_train,y_val,y_test
+    except FileNotFoundError:
+        logging.error(f"Dataset file not found: {file_path}")
+        raise
+    except Exception as e:
+        logging.error(f"Error loading data: {str(e)}")
+        raise    

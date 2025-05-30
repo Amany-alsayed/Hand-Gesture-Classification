@@ -8,11 +8,10 @@ def train_gredient_Boost(X_train,y_train,model_name):
     logging.info("Training gredient boosting model...")
     gbc = GradientBoostingClassifier(random_state=42)
     param_grid_gbc = {
-    'n_estimators': [100, 200, 300],
+    'n_estimators': [200],
     'learning_rate': [0.01, 0.05, 0.1],
-    'max_depth': [3, 5, 7],
     }
-    model_gb= GridSearchCV(gbc, param_grid_gbc,scoring='accuracy')
+    model_gb= GridSearchCV(gbc, param_grid_gbc,scoring='accuracy',verbose=2)
     model_gb.fit(X_train,y_train)
     joblib.dump(model_gb, f"pkl_files/{model_name}.pkl")
     return model_gb
@@ -27,7 +26,7 @@ def train_random_forest(X_train,y_train,model_name):
     'max_features': ['sqrt', 'log2'],
     'class_weight': [None, 'balanced']
     }
-    model_rf= GridSearchCV(rfc, param_grid_rfc,scoring='accuracy')
+    model_rf= GridSearchCV(rfc, param_grid_rfc,scoring='accuracy',verbose=2)
     model_rf.fit(X_train,y_train)
     joblib.dump(model_rf, f"pkl_files/{model_name}.pkl")
     return model_rf
