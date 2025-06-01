@@ -17,7 +17,7 @@ def log_model_with_mlflow(model, X_val, y_val, model_name, exp_id, output_dir):
         mlflow.set_tag("model", model_name)
 
         pred = model.predict(X_val)
-        accuracy,pres,recall,f1_sc= evaluation(y_val, pred,output_dir)
+        accuracy,pres,recall,f1_sc= evaluation(y_val, pred,output_dir,model_name)
          
 
         mlflow.log_params(model.best_params_)
@@ -29,7 +29,7 @@ def log_model_with_mlflow(model, X_val, y_val, model_name, exp_id, output_dir):
             "val_precision":pres,
         })
 
-        mlflow.log_artifact(str(output_dir / "conf_matrix.png"))
+        mlflow.log_artifact(str(output_dir / f"{model_name}_conf_matrix.png"))
         mlflow.log_artifact(f"pkl_files/{model_name}.pkl")
         X_val_df = pd.DataFrame(X_val)
         pd_dataset = mlflow.data.from_pandas(X_val_df, name="validation Dataset")

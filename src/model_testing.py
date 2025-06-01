@@ -9,7 +9,6 @@ def testing(experiment_id,X_test,y_test):
         order_by=["metrics.val_Accuracy DESC"],
         max_results=1
     )
-
     best_run = runs[0]
     model_uri = f"runs:/{best_run.info.run_id}/model"
     logging.info(f"Best model: {best_run.data.tags['mlflow.runName']}")

@@ -4,7 +4,7 @@ from sklearn.svm import SVC
 import logging
 import joblib
 
-def train_gredient_Boost(X_train,y_train,model_name):
+def train_gredient_Boost(X_train,y_train,model_name,pkl_dir):
     logging.info("Training gredient boosting model...")
     gbc = GradientBoostingClassifier(random_state=42)
     param_grid_gbc = {
@@ -13,11 +13,11 @@ def train_gredient_Boost(X_train,y_train,model_name):
     }
     model_gb= GridSearchCV(gbc, param_grid_gbc,scoring='accuracy',verbose=2)
     model_gb.fit(X_train,y_train)
-    joblib.dump(model_gb, f"pkl_files/{model_name}.pkl")
+    joblib.dump(model_gb,pkl_dir/f"{model_name}.pkl")
     return model_gb
 
 
-def train_random_forest(X_train,y_train,model_name):
+def train_random_forest(X_train,y_train,model_name,pkl_dir):
     logging.info("Training Random Forest model...")
     rfc=RandomForestClassifier(random_state=42)
     param_grid_rfc = {
@@ -28,11 +28,11 @@ def train_random_forest(X_train,y_train,model_name):
     }
     model_rf= GridSearchCV(rfc, param_grid_rfc,scoring='accuracy',verbose=2)
     model_rf.fit(X_train,y_train)
-    joblib.dump(model_rf, f"pkl_files/{model_name}.pkl")
+    joblib.dump(model_rf,pkl_dir/f"{model_name}.pkl")
     return model_rf
 
 
-def train_SVM(X_train,y_train,model_name):
+def train_SVM(X_train,y_train,model_name,pkl_dir):
     logging.info("Training SVM model...")
     param_grid={
     'C': [0.1,1, 10, 100],
@@ -47,5 +47,5 @@ def train_SVM(X_train,y_train,model_name):
     verbose=2,
     )  
     model_svc=grid_search.fit(X_train,y_train)
-    joblib.dump(model_svc, f"pkl_files/{model_name}.pkl")
+    joblib.dump(model_svc,pkl_dir/f"{model_name}.pkl")
     return model_svc

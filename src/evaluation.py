@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 import logging
 
-def evaluation(y_test,y_pred,output_dir):
+def evaluation(y_test,y_pred,output_dir,model_name):
     logging.info("Calculating evaluation metrics...")
     classes=['call', 'dislike', 'fist', 'four', 'like', 'mute', 'ok', 'one',
        'palm', 'peace', 'peace_inverted', 'rock', 'stop', 'stop_inverted',
@@ -20,6 +20,6 @@ def evaluation(y_test,y_pred,output_dir):
     plt.xticks(rotation=90, ha="right")
     plt.title("Confusion Matrix")
     output_dir.mkdir(parents=True, exist_ok=True)
-    plt.savefig(output_dir / "conf_matrix.png")
+    plt.savefig(output_dir / f"{model_name}_conf_matrix.png")
     plt.close()
     return accuracy,pres,recall,f1_sc
