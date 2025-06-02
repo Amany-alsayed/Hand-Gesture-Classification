@@ -15,12 +15,13 @@ def log_model_with_mlflow(model, X_val, y_val, model_name, exp_id, output_dir):
     with mlflow.start_run(experiment_id=exp_id, run_name=model_name) as run:
         logging.info(f"Logging {model_name} to MLflow...")
         mlflow.set_tag("model", model_name)
-
-        pred = model.predict(X_val)
+        best=model.best_estimator_
+        pred = best.predict(X_val)
         accuracy,pres,recall,f1_sc= evaluation(y_val, pred,output_dir,model_name)
          
 
         mlflow.log_params(model.best_params_)
+
         mlflow.log_metrics({
             "Mean CV score": model.best_score_,
             "val_Accuracy": accuracy,

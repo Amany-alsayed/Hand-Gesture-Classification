@@ -13,6 +13,7 @@ def setup_logging():
     )
 
 def main():
+    setup_logging()
     experiment_id = setup_mlflow_experiment("Hand_Gesture_Classification")
     BASE_DIR = Path(__file__).resolve().parent
     data_path = BASE_DIR / "dataset/hand_landmarks_data.csv"
@@ -29,6 +30,7 @@ def main():
     """
     rf_model = train_random_forest(X_train, y_train,"RandomForestClassifier",pkl_dir)
     #rf_model=joblib.load(pkl_dir/"RandomForestClassifier.pkl")
+    
     log_model_with_mlflow(rf_model, X_val, y_val, "RandomForestClassifier", experiment_id, output_dir)
     
     gb_model = train_gredient_Boost(X_train, y_train,"GredientBoostingClassifier",pkl_dir)
@@ -40,7 +42,7 @@ def main():
     log_model_with_mlflow(sv_model, X_val, y_val, "SVMClassifier", experiment_id, output_dir)
     
     test_acc=testing(experiment_id,X_test,y_test)
-    print(f"final accuacy for testing: {test_acc}")
+    logging.info(f"final accuacy for testing: {test_acc}")
      
 
 if __name__ == "__main__":

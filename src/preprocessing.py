@@ -18,7 +18,7 @@ def recenter_landmarks(landmarks):
 
 def normalize_landmarks(landmarks):
     mid_finger_x, mid_finger_y = landmarks.iloc[:,9 * 3], landmarks.iloc[:,9 * 3 + 1]
-    norm=np.sqrt(mid_finger_x**2+mid_finger_y**2)
+    norm=np.sqrt(mid_finger_x**2,mid_finger_y**2)
     # Prevent division by zero
     norm[norm==0]=1
     # Normalize landmarks
