@@ -1,8 +1,9 @@
 import logging
 import mlflow
 from sklearn.metrics import accuracy_score, classification_report
+import joblib
 
-def testing(experiment_id,X_test,y_test):
+def testing(experiment_id,X_test,y_test,pkl_dir):
     client = mlflow.tracking.MlflowClient()
     runs = client.search_runs(
         experiment_ids=[experiment_id],
@@ -13,7 +14,7 @@ def testing(experiment_id,X_test,y_test):
     model_uri = f"runs:/{best_run.info.run_id}/model"
     logging.info(f"Best model: {best_run.data.tags['mlflow.runName']}")
     logging.info(f"Validation Accuracy: {best_run.data.metrics['val_Accuracy']}")
-    best_model = mlflow.sklearn.load_model(model_uri)
+    best_model = joblib.load(pkl_dir/f"{best_run.data.tags['mlflow.runName']}.pkl")
     y_pred_test = best_model.predict(X_test)
     accuracy=accuracy_score(y_test, y_pred_test)
     logging.info(f"Test Accuracy: {accuracy}")

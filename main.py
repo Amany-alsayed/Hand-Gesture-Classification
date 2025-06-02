@@ -9,7 +9,11 @@ import logging
 def setup_logging():
     logging.basicConfig(
         level=logging.INFO,
-        format=f"{Fore.GREEN}%(asctime)s{Style.RESET_ALL} - {Fore.BLUE}%(levelname)s{Style.RESET_ALL} - %(message)s",
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[
+            logging.FileHandler("src/app.log"),
+            logging.StreamHandler()
+        ]
     )
 
 def main():
@@ -41,7 +45,7 @@ def main():
     #sv_model=joblib.load(pkl_dir/"SVMClassifier.pkl")
     log_model_with_mlflow(sv_model, X_val, y_val, "SVMClassifier", experiment_id, output_dir)
     
-    test_acc=testing(experiment_id,X_test,y_test)
+    test_acc=testing(experiment_id,X_test,y_test,pkl_dir)
     logging.info(f"final accuacy for testing: {test_acc}")
      
 
